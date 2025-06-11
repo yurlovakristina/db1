@@ -1,0 +1,547 @@
+Na základe zadania a schémy databázy je potrebné napísať SQL dopyt, ktorý:
+
+Zobrazí meno, priezvisko a trvanie v sekundách (čas_v_milisekundach / 1000) bežcov,
+
+Ktorí sa zúčastnili preteku s názvom "Polmaratón v Bruseli",
+
+A boli umiestnení v prvej polovici výsledkovej listiny (teda medzi tými, ktorí dobehli do cieľa),
+
+Výsledok sa zoradí podľa:
+
+trvania behu (vzostupne),
+
+potom priezviska (A–Z),
+
+potom mena (A–Z),
+
+Výsledok obsahuje len 5 riadkov.
+WITH vysledky AS (
+  SELECT
+    b.meno,
+    b.priezvisko,
+    bp.cas_v_milisekundach / 1000.0 AS sekundy,
+    ROW_NUMBER() OVER (ORDER BY bp.cas_v_milisekundach) AS poradie,
+    COUNT(*) OVER () AS pocet_bezco_vysledkov
+  FROM bezec b
+  JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+  JOIN pretek p ON bp.id_pretek = p.id_pretek
+  WHERE p.nazov = 'Polmaratón v Bruseli'
+    AND bp.cas_v_milisekundach IS NOT NULL
+)
+SELECT
+  meno,
+  priezvisko,
+  sekundy
+FROM vysledky
+WHERE poradie <= pocet_bezco_vysledkov / 2
+ORDER BY sekundy ASC, priezvisko ASC, meno ASC
+LIMIT 5;
+
+
+Napíšte SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradě
+· priezvisko bežca, pomenované ako priezvisko,
+· priemerný čas v sekundach, všetkých absolvovaných pretekov daného bežča (t. ). priemer sa počíta z hodnět v mřísekundách a až následne sa prevedie na sekundyl, pomenovaný ako priemer
+(pozor na menovcov),
+· pačet všetkých absolovaných pretekov daného bežca, pomenovaný aku pocet.
+
+Do výsledku rezarátajte pretek „Maratón v Berlíne“ a vypíšte len bežcov z Afriky, kton sú zároveři mladší ako 1.1.1990 (vrátane)
+Výsledok zoradte vzostupne (1-9, A-Z) podľa priezviska, priemeru a počtu.
+Nepouživajte diakritiku pri pomenovani stlpoův.
+Výsledn dopyt vráti 4 riadky.
+SELECT
+  b.priezvisko AS priezvisko,
+  ROUND(AVG(bp.cas_v_milisekundach) / 1000.0, 2) AS priemer,
+  COUNT(*) AS pocet
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+JOIN pretek p ON bp.id_pretek = p.id_pretek
+WHERE k.kontinent = 'Afrika'
+  AND b.datum_narodenia >= '1990-01-01'
+  AND p.nazov <> 'Maratón v Berlíne'
+  AND bp.cas_v_milisekundach IS NOT NULL
+GROUP BY b.id_bezec, b.priezvisko
+ORDER BY priezvisko ASC, priemer ASC, pocet ASC
+LIMIT 4;
+
+Japíšte SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradí:
+· meno a priezvisko bežca zreťazené do jedného reťazca s medzerou medzi menom a priezviskom, pomenované ako meno,
+· rozloha a reťazec km2 zreťazené do jedného reťazca s medzerou medzi rozlohou a km2, pomenovaný ako rozloha,
+
+· cas v sekundách pomenovaný ako cas.
+
+o výsledku zahrňte len tých bežcov, ktorí majú nejaký čas, ich priezvisko nekončí na 'ez' a nepochádzajú z Afriky.
+
+sledok zoraďte nasledovne:
+
+· najprv podľa stípca cas vzostupne (1 - 9),
+· potom podľa stĺpca rozloha vzostupne (1 - 9),
+
+· nakoniec podľa stĺpca meno zostupne (Z - A).
+
+používajte diakritiku pri pomenovaní stĺpcov.
+ledný dopyt vráti 74 riadkov
+
+SELECT
+  CONCAT(b.meno, ' ', b.priezvisko) AS meno,
+  CONCAT(k.rozloha_v_km2, ' km2') AS rozloha,
+  ROUND(bp.cas_v_milisekundach / 1000.0, 2) AS čas
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+WHERE bp.cas_v_milisekundach IS NOT NULL
+  AND b.priezvisko NOT LIKE '%ez'
+  AND k.kontinent <> 'Afrika'
+ORDER BY
+  čas ASC,
+  k.rozloha_v_km2 ASC,
+  meno DESC;
+Napíšte SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradí:
+· meno a priezvisko bežca zreťazené do jedného reťazca s medzerou medzi, pomenované ako meno,
+· čas v sekundách (prepočítaný z milisekúnd), pomenovaný ako cas,
+· názov preteku, ktorého sa bežec zúčastnil, pomenovaný ako pretek.
+
+Do výsledku zahrňte len tých bežcov, ktorí majú nejaký čas, nemajú uvedené stredné meno, pochádzajú z krajiny, ktorej rozloha nepresahuje 400 000 km2.
+Výsledok zoraďte vzostupne (1 -· 9, A - Z) podľa stĺpcov v tomto poradí: pretek, cas, meno.
+Nepoužívajte diakritiku pri pomenovaní stĺpcov.
+Výsledný dopyt vráti 20 riadkov.
+SELECT
+  CONCAT(b.meno, ' ', b.priezvisko) AS meno,
+  ROUND(bp.cas_v_milisekundach / 1000.0, 2) AS cas,
+  p.nazov AS pretek
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+JOIN pretek p ON bp.id_pretek = p.id_pretek
+WHERE bp.cas_v_milisekundach IS NOT NULL
+  AND b.stredne_meno IS NULL
+  AND k.rozloha_v_km2 <= 400000
+ORDER BY
+  pretek ASC,
+  cas ASC,
+  meno ASC;
+Napíšte SQL dopyt, ktorý vráti zoznam pretekov, ktorých dĺžka je na intervale 40000 až 50000 metrov (vrátane). Dopyt nech vráti 3 stĺpce v nasledůjúcom poradí:
+Názov preteku pomenovaný ako „pretek“
+Rok kedy sa bežal pretek pomenovaný ako „rok“
+Dĺžka preteku v metroch pomenovaný ako „dlzka“
+Záznamy zoraďte podľa názvu preteku vzostupne (A->Z), roku vzostupne (1->9) a dĺžky zostupne (9->1).
+Výsledný dopyt vráti 3 riadky.
+SELECT
+  p.nazov AS pretek,
+  EXTRACT(YEAR FROM p.datum) AS rok,
+  p.dlzka_v_metroch AS dlzka
+FROM pretek p
+WHERE p.dlzka_v_metroch BETWEEN 40000 AND 50000
+ORDER BY
+  pretek ASC,
+  rok ASC,
+  dlzka DESC;
+Napíšte SQL dopyt, ktorý nájde bežcov, ktorých priezvisko má menej ako 7 znakov a zároveň ich meno začína písmenom „A“ alebo „J”.
+Výstup má obsahovať 3 stĺpce v nasledujúcom poradí:
+
+1. Meno bežca, pomenované ako meno
+
+2. Priezvisko bežca, pomenované ako priezvisko
+
+3. Rok narodenia bežca, pomenovaný ako rok_narodenia
+
+oraďte výsledok:
+
+· padľa mena vzostupne (A->Z),
+
+· potom podľa priezviska vzostupne (A->Z),
+
+· a nakoniec podľa roku narodenia zostupne (9->1)
+
+ýsledný dopyt vráti 7 riadkov.
+SELECT
+  b.meno AS meno,
+  b.priezvisko AS priezvisko,
+  EXTRACT(YEAR FROM b.datum_narodenia) AS rok_narodenia
+FROM bezec b
+WHERE LENGTH(b.priezvisko) < 7
+  AND (b.meno LIKE 'A%' OR b.meno LIKE 'J%')
+ORDER BY
+  meno ASC,
+  priezvisko ASC,
+  rok_narodenia DESC;
+Napíšte SQL dopyt, ktorý vráti meno, priezvisko a názov krajiny bežca z kontinentu Európa, ale vynechajte krajinu Česko. Stĺpce pomenujte meno,
+priezvisko, stat (bez diakritiky) a nech sú v tomto poradí. Zoraďte stĺpce podľa mena vzostupne (A-Z) potom podľa priezviska zostupne (Z-A) a
+nakoniec podľa názvu krajiny vzostupne (A-Z).
+SELECT
+b.meno AS meno,
+b.priezvisko AS priezvisko,
+k.nazov AS stat
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+WHERE k.kontinent = 'Európa'
+AND k.nazov <> 'Česko'
+ORDER BY
+b.meno ASC, -- A->Z
+b.priezvisko DESC, -- Z->A
+k.nazov ASC -- A->Z
+LIMIT 15;
+Napíšte SQL dopyt, ktorý vráti jeden stĺpec a bude pomenovaný ako pretek. Riadky v danom stĺpcí budú predstavovať názvy pretekov, na ktorých sa
+zúčastnil bežec s menom "Marek" a priezviskom "Kováč". Výsledok zoraďte podľa názvu preteku vzostupne (A-Z).
+Výsledný dopyt vráti 3 riadky.
+SELECT
+p.nazov AS pretek
+FROM pretek p
+JOIN bezec_pretek bp ON p.id_pretek = bp.id_pretek
+JOIN bezec b ON bp.id_bezec = b.id_bezec
+WHERE b.meno = 'Marek'
+AND b.priezvisko = 'Kováč'
+ORDER BY p.nazov ASC -- A->Z
+LIMIT 3;
+Napište SQL dopyt, ktorý vráti zoznam úplne všetkých krajín spolu s priezviskami
+Priezviská nech sů zobrazené ako jeden reťazec, kde sú jednotlivé priezviská odde
+
+Výstup má obsahovať 4 stĺpce v nasledujúcom poradí:
+1. Názov krajiny, pomenovaný ako krajina
+2. Kód krajiny, pomenovaný ako skratka
+3. Spojený reťazec priezvisk bežcov, pomenovaný ako bezci
+4. Počet bežcov z danej krajiny, pomenovaný ako pocet
+
+Zoraďte výsledok:
+· podľa názvu krajiny vzostupne (A->Z],
+· potom podla kódu krajiny vzostupne (A->Z),
+· následne podla počtu bežcov zostupne (9-> 1),
+· a napokon podľa priezvisk (spojeného retazca) vzostupne (A->Z).
+
+Nsledný dopyt vráti 15 riadkov.
+SELECT
+k.nazov AS krajina,
+k.kod AS skratka,
+STRING_AGG(b.priezvisko, ',' ORDER BY b.priezvisko) AS bezci,
+COUNT(*) AS pocet
+FROM krajina k
+JOIN bezec b ON b.id_krajina = k.id_krajina
+GROUP BY
+k.nazov,
+k.kod
+ORDER BY
+krajina ASC,
+skratka ASC,
+pocet DESC,
+bezci ASC
+LIMIT 15;
+Napíšte SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradí:
+· meno bežca a pomenované ako meno,
+· priezvisko bežca a pomenované ako priezvisko,
+· názov preteku a pomenované ako pretek,
+
+Výsledok zoraďte vzostupne (1-9, A-Z) podľa mena, priezviska a preteku. Vo výsledku zarátajte iba preteky, ktoré sa budů konať v májí 2025.
+Nepoužívajte diakritiku pri pomenovaní stĺpcov.
+
+Výsledný dopyt vráti 33 riadkov.
+SELECT
+b.meno AS meno,
+b.priezvisko AS priezvisko,
+p.nazov AS pretek
+FROM bezec b
+JOIN bezec_pretek bp ON bp.id_bezec = b.id_bezec
+JOIN pretek p ON p.id_pretek = bp.id_pretek
+WHERE p.datum BETWEEN '2025-05-01' AND '2025-05-31'
+ORDER BY
+b.meno ASC,
+b.priezvisko ASC,
+p.nazov ASC;
+Napíšte SQL dopyt, ktorý vráti počet pretekov, ktoré jednotliví bežci s vyplneným stredným menom úspešne dokončili (tzn. cas v_milisekundach nie
+je NULL), a zároveň pochádzajú z krajín, ktorých kód obsahuje písmeno „R“.
+Vo výstupe nech sa nachádza aj čiastkový súčet dokončených pretekov týchto bežcov pre jednotlivé krajiny a celkový súčet dokončených pretekov
+týchto bežcov.
+Výstup má obsahovať 3 stĺpce v nasledujúcom poradí:
+1. Kód krajiny, pomenovaný ako krajina
+2. Stredné meno bežca, pomenované ako bezec
+
+3. Počet dokončených pretekov, pomenovaný ako dokoncil
+
+Zoraďte výsledok:
+
+· podľa kódu krajiny vzostupne (A->Z),
+· potom podľa stredného mena bežca vzostupne (A->Z),
+· a nakoniec podľa počtu dokončených pretekov zostupne (9->1).
+
+Výsledný dopyt vráti 9 riadkov,
+SELECT
+k.kod AS krajina,
+b.stredne_meno AS bezec,
+COUNT(*) AS dokoncil
+FROM krajina k
+JOIN bezec b ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON bp.id_bezec = b.id_bezec
+WHERE b.stredne_meno IS NOT NULL
+AND bp.cas_v_milisekundach IS NOT NULL
+AND k.kod LIKE '%R%'
+GROUP BY GROUPING SETS ((k.kod, b.stredne_meno),(k.kod),())
+ORDER BY
+krajina ASC NULLS LAST,
+bezec ASC NULLS LAST,
+dokoncil ASC;
+Napíte SQL dopyt, ktorý vráti 2 stĺpce v nasledujúcom poradí:
+kontinent - názov kontinentu, z ktorého pochádzajú bežci pomenovaný ako kontinent,
+pocet bezcov - počet bežcov z daného kontinentu, ktorí zabehli čas kratší ako 140000 milisekúnd, nepochádzajú z krajiny India a zároveň sa
+narodili po dátume 21. 07. 1985 (vrátane), pomenovaný ako pocet_bezcov,
+
+Do výsledku zahrňte iba tie kontinenty, kde je viac ako 6 takýchto bežcov.
+Výsledok zoraďte nasledovne:
+
+najprv podla pocet bezcov zostupne (9 - 1),
+potom podla kontinent vzostupne (A -· Z).
+
+Nepoužívajte diakritiku pri pomenovaní stĺpcov.
+Výsledný dopyt vráti 2 riadky.
+SELECT
+k.kontinent AS kontinent,
+COUNT(b.id_bezec) AS pocet_bezcov
+FROM krajina k
+JOIN bezec b ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON bp.id_bezec = b.id_bezec
+WHERE bp.cas_v_milisekundach < 140000
+AND k.nazov <> 'India'
+AND b.datum_narodenia >= '1985-07-21'
+GROUP BY
+k.kontinent
+HAVING
+COUNT(b.id_bezec) > 6
+ORDER BY
+pocet_bezcov DESC,
+kontinent ASC
+Napíšte SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradí:
+· meno a priezvisko bežca zreťazené do jedného reťazca s medzerou medzi, pomenované ako
+meno,
+· čas v sekundách (prepočítaný z milisekúnd), pomenovaný ako cas,
+· názov preteku, ktorého sa bežec zúčastnil, pornenovaný ako pretek.
+
+Do výsledku zahrňte len tých bežcov, ktorí majú nejaký čas, nemajú uvedené stredné meno,
+pochádzajú z krajiny, ktorej rozloha nepresahuje 400 000 km2
+Výsledok zoraďte vzostupne (1 -+ 9, A -· Z) podľa stĺpcov v tomto poradí: pretek, cas, meno.
+Nepoužívajte diakritiku pri pomenovaní stĺpcov.
+Výsledný dopyt vráti 20 riadkov.
+SELECT
+b.meno || ' ' || b.priezvisko AS meno,
+bp.cas_v_milisekundach / 1000.0 AS cas,
+p.nazov AS pretek
+FROM bezec b
+JOIN bezec_pretek bp ON bp.id_bezec = b.id_bezec
+JOIN pretek p ON bp.id_pretek = p.id_pretek
+JOIN krajina k ON b.id_krajina = k.id_krajina
+WHERE bp.cas_v_milisekundach IS NOT NULL
+AND b.stredne_meno IS NULL
+AND k.rozloha_v_km2 <= 400000
+ORDER BY
+pretek ASC,
+cas ASC,
+meno ASC
+LIMIT 20;
+Napíšte SQL dopyt, ktorý vráti meno, priezvisko a štát všetkých bežcov, ktorí NIE sú z Európy.
+Výsledok zoraďte vzostupne podľa štátu, potom priezviska a nakoniec mena. Stĺpce premenujte na
+meno, priezvisko a stat (bez diakritiky).
+
+Výsledný dopyt vráti 27 riadkov.
+SELECT
+b.meno AS meno,
+b.priezvisko AS priezvisko,
+k.nazov AS stat
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+WHERE k.kontinent <> 'Európa'
+ORDER BY
+stat ASC,
+priezvisko ASC,
+meno ASC;
+Napište SOL dopyt, ktorý vráti názov, dĺžku v metroch a čas v milisekundách pre všetky preteky, ktoré majů názov Taliansky polmaratón a majú uvědený nejaky čas.
+Výsledok zoraďte vzostupne (A -· Z) podľa názvu, potomdĺžky a nakoniec času.
+Stĺpce premenujte na nazov, dizka, cas (bez diakritiky).
+Výsledný dopyt vráti 14 riadkov.
+SELECT
+p.nazov AS nazov,
+p.dlzka_v_metroch AS dlzka,
+bp.cas_v_milisekundach AS cas
+FROM pretek p
+JOIN bezec_pretek bp ON bp.id_pretek = p.id_pretek
+WHERE p.nazov = ‘Taliansky polmaratón’
+AND bp.cas_v_milisekundach IS NOT NULL
+ORDER BY
+nazov ASC,
+dlzka ASC,
+cas ASC;
+Napište SQL dopyt, ktorý vráti krajinu, zaokrúhlený priemerný čas v sekundách (nahor) a počet bežcov z tejto krajiny, ktorí sa zúčastnili na ľubovoľnom preteku.
+Výstupné stpce: stat, priemer, pocet (v tomto porad, bez diakritiky)
+Zoradiť výsledok vzostupne podľa priemer (1-+9), potom pocet (1-9)
+Očakávaný počet riadkov: 14
+SELECT
+k.nazov AS stat,
+ROUND(AVG(bp.cas_v_milisekundach) / 1000.0, 0) AS priemer,
+COUNT(DISTINCT b.id_bezec) AS pocet
+FROM Krajina k
+JOIN bezec b ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON bp.id_bezec = b.id_bezec
+GROUP BY k.nazov
+ORDER BY priemer ASC,
+pocet ASC;
+Napíšte SQL dopyt, ktorý vráti zoznam pretekov, ktorých dĺžka je na intervale 40000 až 50000 metrov (vrátane). Dopyt nech vráti 3 stĺpce v nasledujúcom poradi
+Názov preteku pomenovaný ako „pretek“
+Rok kedy sa bežal pretek pomenovaný ako „rok"
+Dĺžka preteku v metroch pomenovaný ako „dlzka“
+Záznamy zoraďte podľa názvu preteku vzostupne (A->Z), roku vzostupne (1->9) a dĺžky zostupne (9->1).
+Výsledný dopyt vráti 3 riadky.SELECT
+p.nazov AS pretek,
+EXTRACT(YEAR FROM p.datum) AS rok,
+p.dlzka_v_metroch AS dlzka
+FROM pretek p
+WHERE p.dlzka_v_metroch BETWEEN 40000 AND 50000
+ORDER BY pretek ASC,
+rok ASC,
+dlzka DESC;
+Napíšte SQL dopyt, ktorý vráti 2 stĺpce v nasledujúcom poradí:
+· meno a priezvisko bežca zretazené a pomenované ako meno,
+- čas v sekundach, pomenovaný ako cas, ktorý zabehli bežci na preteku „Maratón v Berline".
+Výsledok zoraďte vzostupne (1-9, A-Z) podľa casu, priezviska, mena.
+Nepoužívajte diakritiku pri pomenovaní stĺpcov.
+
+Výsledný dopyt vráti 18 riadkov.
+SELECT
+b.meno || ' ' || b.priezvisko AS meno,
+bp.cas_v_milisekundach / 1000.0 AS cas
+FROM pretek p
+JOIN bezec_pretek bp ON bp.id_pretek = p.id_pretek
+JOIN bezec b ON b.id_bezec = bp.id_bezec
+WHERE p.nazov = 'Maratón v Berlíne'
+ORDER BY cas ASC NULLS LAST,
+b.priezvisko ASC,
+b.meno ASC;
+lapište SQL dopyt, ktorý vrati 3 stĺpce v temto peradi
+1. meno bežca (pomenovaný ako seno).
+2. priezvisko bežca (pomenované ako pršezvšsko],
+3. trvanie behu v sekundách (pomenovaný ako sekundy).
+
+opyt må vátit bežcev, ktori sa umiestnili v prvej pelovici výsledkovej listiny pre pretek s názvom _Polmaratón v Bruseli".
+· Ak bežec nemá uvedený čas, znamená to, že nedobehol - aj takíto bežci sů vo výsledkovej listine a umiestňujú sa na koniec poradla.
+· Zoradenie výsledku:
+· najskór podľa trvania behu (sekundy) vzostupne (najrýchlejší prví),
+· potom podľa priezviska [A,-Z].
+. nakoniec podla mena [A -- Z).
+
+Výsledný dopyt vráti presne 5 rladkov.
+WITH zoradeni AS (
+SELECT
+b.meno,
+b.priezvisko,
+bp.cas_v_milisekundach / 1000.0 AS sekundy,
+NTILE(2) OVER (
+ORDER BY
+ bp.cas_v_milisekundach IS NULL
+ bp.cas_v_milisekundach,
+ b.priezvisko,
+ b.meno
+ ) AS kos
+ FROM pretek p
+ JOIN bezec_pretek bp ON bp.id_pretek = p.id_pretek
+ JOIN bezec b ON b.id_bezec = bp.id_bezec
+ WHERE p.nazov = 'Polmaratón v Bruseli'
+)
+SELECT
+meno,
+priezvisko,
+sekundy
+FROM zoradeni
+WHERE kos = 1
+ORDER BY
+sekundy ASC NULLS LAST,
+priezvisko ASC,
+ meno ASC;
+Napíšte SQL dopyt, ktorý vráti 4 stĺpce v nasledujucom poradí:
+- meno pretekára pomenované ako meno,
+- priezvisko pretekára pomenované ako priezvisko,
+- názov preteku pomenovaný ako pretek,
+· čas v milisekundách, ktorý bežec dosiahol v preteku. Stĺpec nech je pomenovaný ako milisekundy, (Taktiež zobrazte aj pretekárov, ktorí nemajú uvedený čas a tam bude uvedená hodnota <null>, )
+
+Vo výsledku zobrazte len pretek s názvom "Beh po Alpách". Výsledný dopyt zoraďte podľa mena, priezviska, názvu preteku vzostupne (A-Z) a podľa času, ktorý bežec dosiahol zostupne (9-1).
+
+Výsledný dopyt vráti 13 riadkov.
+SELECT
+b.meno AS meno,
+b.priezvisko AS priezvisko,
+p.nazov AS pretek,
+bp.cas_v_milisekundach AS milisekundy
+FROM pretek p
+JOIN bezec_pretek bp ON bp.id_pretek = p.id_pretek
+JOIN bezec b ON b.id_bezec = bp.id_bezec
+WHERE p.nazov = 'Beh po Alpách'
+ORDER BY
+meno ASC,
+priezvisko ASC,
+pretek ASC,
+milisekundy DESC NULLS LAST; 
+
+Napište SQL dopyt, ktorý vrátí jeden stĺpec a bude pomenovaný ako pretek. Riadky v danom stĺpci budů predstavovať názvy pretekov, na ktorých sa zúčastnil bežec s menom "Marek" a
+priezviskom "Kováč". Výsledok zoraďte podľa názvu preteku vzostupne (A-Z).
+Výsledný dopyt vráti 3 riadky.
+SELECT p.nazov AS pretek
+FROM bezec b
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+JOIN pretek p ON bp.id_pretek = p.id_pretek
+WHERE b.meno = 'Marek'
+  AND b.priezvisko = 'Kováč'
+ORDER BY pretek ASC;
+Napíšte SQL dopyt, ktorý vráti názov, dĺžku v metroch a čas v milisekundách pre všetky preteky, ktoré majú názov Taliansky polmaratón a majú uvedený nejaký čas.
+Výsledok zoraďte vzostupne (A - Z) podľa názvu, potom dĺžky a nakoniec času.
+Stĺpce premenujte na nazov, dlzka, cas (bez diakritiky).
+Výsledný dopyt vráti 14 riadkov.
+SELECT
+  p.nazov AS nazov,
+  p.dlzka_v_metroch AS dlzka,
+  bp.cas_v_milisekundach AS cas
+FROM pretek p
+JOIN bezec_pretek bp ON p.id_pretek = bp.id_pretek
+WHERE p.nazov = 'Taliansky polmaratón'
+  AND bp.cas_v_milisekundach IS NOT NULL
+ORDER BY
+  nazov ASC,
+  dlzka ASC,
+  cas ASC;
+Napište SQL dopyt, ktorý vráti meno bežca (zreťazené meno a priezvisko) a názov preteku, ktorého sa zúčastnil. Vo výsředku zahrnite len bežcov, ktoní sů z Ázíe.
+Výstupiné stípce: meno, pretek (v tomto poradí, bez diakrtiky)
+Zoradiť výsledok vzostupne podla meno (A-Z), potom pretek (A-Z)
+
+Očakávaný počet riadkov: 18
+SELECT
+  CONCAT(b.meno, ' ', b.priezvisko) AS meno,
+  p.nazov AS pretek
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+JOIN pretek p ON bp.id_pretek = p.id_pretek
+WHERE k.kontinent = 'Ázia'
+ORDER BY
+  meno ASC,
+  pretek ASC;
+Napište SQL dopyt, ktorý vráti 3 stĺpce v nasledujúcom poradí:
+· meno a priezvisko bežca zreťazené do jedněho reťazca s medzerou medzi menom a priezviskom, pomenované ako meno,
+· rozloha a reťazec km2 zreťazené do jedného reťazca s medzerou medzi rozlohou a km2, pomenovaný ako rozloha,
+· cas v sekundách pomenovaný ako cas.
+
+Do výsledku zahrňte len tých bežcov, ktorí majú nejaký čas, ich priezvisko nekončí na "ez' a nepochádzajú z Afriky.
+Výsledok zoraďte nasledovne:
+· najprv podľa stĺpca cas vzostupne (1 -- 9),
+· potom podľa stipca rozloha vzostupne (1 -- 9).
+· nakoniec podfa stipca meno zostupne (Z - A).
+
+Nepoužívajte diakritiku pri pomenovaní stlpcov.
+Výsledný dopyt vráti 74 riadkov.
+SELECT
+  CONCAT(b.meno, ' ', b.priezvisko) AS meno,
+  CONCAT(k.rozloha, ' km2') AS rozloha,
+  bp.cas_v_milisekundach / 1000 AS cas
+FROM bezec b
+JOIN krajina k ON b.id_krajina = k.id_krajina
+JOIN bezec_pretek bp ON b.id_bezec = bp.id_bezec
+WHERE bp.cas_v_milisekundach IS NOT NULL
+  AND b.priezvisko NOT LIKE '%ez'
+  AND k.kontinent <> 'Afrika'
+ORDER BY
+  cas ASC,
+  rozloha ASC,
+  meno DESC;
+
