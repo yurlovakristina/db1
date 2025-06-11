@@ -510,3 +510,34 @@ DQL - Data Query Language
 DML - Data Manipulation Language
 DCL - Data Control Language
 TCL - Transaction Control Language
+Ktorý SQL príkaz sa používa na vrátenie iba rôznych hodnôt?
+DISTINCT
+2. Uveďte údajový typ, ktorý umožňuje zadávať finančné hodnoty od -99,99 do 99,99 (s dvoma desatinnými miestami), ale nie 100. Bez použitia CHECK:
+📝 Odpoveď: NUMERIC(4,2)
+3. V dotaze SELECT * FROM customers WHERE email OPERATOR ‘%@gmail.com’ chýba správny operátor. Ktorý tam patrí?
+
+B. LIKE
+. Zapíšte údajový typ, ktorý umožňuje zadávať číslo s celkovým počtom číslic 5 a z toho 3 desatinné miesta:
+📝 Odpoveď: NUMERIC(5,3)
+
+5. Ktorá funkcia vráti tretie až šieste písmeno z reťazca title?
+📝 Odpoveď: SUBSTRING(title FROM 3 FOR 4)
+
+6. Ktoré kľúčové slová sa používajú v súvislosti s transakciami v PostgreSQL?
+📝 Odpoveď: BEGIN, COMMIT, ROLLBACK
+
+7. Ako zrušíte transakciu, aby sa zmeny neuložili do databázy?
+📝 Odpoveď: ROLLBACK
+
+8. Napíšte SQL dopyt, ktorý vráti 5 riadkov, pričom prvý riadok sa preskočí:
+📝 Odpoveď:
+
+sql
+Копировать
+Редактировать
+SELECT * FROM tabulka LIMIT 5 OFFSET 1;
+9. Aký bude výsledok funkcie REPLACE('matematika','ka','te')?
+📝 Odpoveď: matematite
+
+10. Ktorý dátový typ slúži na pevný (fixný) textový reťazec s dĺžkou 20 znakov?
+📝 Odpoveď: CHAR(20)
