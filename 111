@@ -1,0 +1,512 @@
+Májme ERD pre obchod ako je naznačené na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na diagram.
+Dve alebo viac objednávok môžu mať presne rovnaký dátum
+Jeden produkt si mohlo objednať viacero zákazníkov
+Jeden produkt sa môže v tom istom čase nachádzať v rôznych objednávkach
+
+Redundancia dát znamená:
+prebytočnosť dát
+Napíšte príkaz, ktorým obmedzíte počet riadkov, ktorý vráti dotaz na 5. Zariaďte taktiež aby bola prvá hodnota vynechaná, teda vrátia sa riadky 2-6.
+limit 5 offset 1
+
+Májme ERD pre farmu ako je ukázaný na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na vzťah 'pracuje na'.
+na jednej farme môže súčasne pracovať viacero farmárov, pričom každý z nich môže naraz pracovať na viacerých farmách
+jeden farmár môže v tom istom čase pracovať naraz na viacerých farmách
+
+Nasledujúci jednoduchý ERD opisuje databázu šachových hlavolomov (puzzle). Ktorá/é z nasledujúcich možností platí pre preved vztahu "má správne" do relačného modelu?
+vzťah "má správne" môže byť v relačnom modeli vyjadrený pridaním cudzieho kľúča do tabuľky "Puzzle", odkazujúceho sa na tabuľku "Riešenie"
+
+Vyberte pravdivé tvrdenia o INNER JOINe:
+Výsledkom je kombinácia záznamov z jednej tabuľky so záznamami druhej tabuľky, pre ktoré platí podmienka v ON klauzule.
+ 
+Použitím klauzuly USING namiesto ON vieme určiť stĺpce, ktorých hodnoty musia byť rovnaké v oboch tabuľkách rovnaké, aby sa kombinácia záznamov vyskytla vo výsledku.
+
+Vyberte, čo bude platiť po vykonaní nasledujúceho príkazu za predpokladu, že tabuľka penazenka(okamih,financie) existuje, obsahuje 100 riadkov a jej riadky nie sú referované žiadnymi cudzími kľúčmi: TRUNCATE TABLE penazenka WHERE financie >= 100;
+obsah tabuľky sa nezmení
+
+Vyberte pravdivé tvrdenia o referenčnej integrite.
+restriktívny prístup k riešeniu referenčnej integrity zabráni zmazať záznam v databáze ak sa naň odkazuje nejaký cudzí kľúč.
+každodenný prístup k riešeniu referenčnej integrity každodenne zmaže (zmazne) na všetky záznamy odkazujúce sa na práve mazaný (zmazaný) záznam.
+
+Vyberte pravdivé tvrdenia o entitnej integrite údajov v rámci relačného modelu:
+rôzne entity v tabuľke sú vždy rozlíšiteľné prinajmenšom primárnym kľúčom
+ 
+entitná integrita zabezpečuje jednoznačnú identifikovateľnosť každej entity v databáze
+ 
+akékoľvek neuvedenie povinného atribútu entity porušuje entitnú integritu databázy
+ 
+primárny kľúč tabuľky musí byť vždy uvedený (nesmie mať hodnotu NULL)
+Vyberte, čo musí platiť, aby bola databáza v 1. normálnej forme.
+databáza nemôže obsahovať viachodnotové stĺpce.
+ 
+databáza nemôže obsahovať zložené stĺpce.
+ 
+hodnoty všetkých stĺpcov v databáze musia byť atomické.
+Májme ERD pre albumové skladby ako je ukázaný na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na vzťah "contains".
+na albume môže byť súčasne viacero skladieb, pričom každá z týchto skladieb sa môže nachádzať práve na jednom albume
+ 
+v relačnom modeli bude tento vzťah vyjadrený cudzím kľúčom na strane skladby
+Vyberte, ktorá úroveň nepatrí medzi úrovne databázového systému:sieťová
+
+Vyberte pravdivé tvrdenia o CROSS JOINe:
+1 из 1
+Skrátený zápis pre CROSS JOIN je čiarka ,
+Je to kartézianský súčin, kde každý záznam z jednej tabuľky je spojený s každým záznamom z druhej tabuľky
+ 
+Vytvorte dotaz, ktorý vráti stĺpec s akciovými cenami, ktoré vznikli znížením cien v stĺpci VELKOOBCHODNA tabuľky CENA o  10%, pomocou operácie násobenia. Stĺpec nech sa volá AKCIA (využite alias).
+select VELKOOBCHODNA * 0.9 as AKCIA from CENA;
+Nasledujúci jednoduchý ERD opisuje databázu šachových hlavolamov (puzzles). Ako prevedieme do relačného modelu vzťah "sa skladá z" medzi Riešeniami a Krokmí
+do tabuľky "Krok" pridáme cudzí kľúč odkazujúci sa na tabuľku "Riesenie"?
+
+Na nasledujúcom obrázku máme ER model pre predaj vajec. Ktoré z nasledujúcich tvrdení sú pre daný diagram správne?
+správna kardinalita vzťahu reprezentovaného asociatívnou entitou "nakup" môže byť reprezentovaná aj cudzím kľúčom v tabuľke "Vajce", ktorý bude odkazovať na tabuľku "Odboratel", avšak tabuľka "Vajce" potom musí mať aj stĺpec predstavujúce cenu a dátum nákupu vajec.
+cudzí kľúč na tabuľku "Vajce" bude stĺpec, ktorý sa bude odkazovať na stĺpec "id" z tabuľky "Vajce".
+cudzí kľúč na tabuľku "Odboratel" sa bude skladať z dvojice stĺpcov obsahujúcich hodnoty mena a priezviska odboratela.
+
+Čo znamená skratka SRBD? rozpíšte slovami po slovensky Čo znamená skratka SRBD? rozpíšte slovami po slovensk  
+1 из 1
+system riadenia bazy dat
+Ktoré z nasledujúcich tvrdení o restriktívnom prístupe k zabezpečeniu referenčnej integrity sú pravdivé?Ak je aktualizovaný primárny kľúč na záznamu, na ktorý existuje referencia, databáza vyhodí výnimku
+Ak je mazaný záznam, na ktorý existuje referencia, databáza vyhodí výnimku
+
+Napíšte dotaz, pre MySQL, ktorý zobrazí databázy systému  
+1 из 1
+show databases;
+
+Čo opisuje konceptuálna schéma databázy?
+opisuje logickú štruktúru údajov a ich vzájomných väzieb a používa sa na komunikáciu medzi databázou a klientkým programom (napr. relačná schéma v relačných databázach)
+
+Ktoré z nasledujúcich jazykov patria do SQL štandardu?
+
+Ktoré z nasledujúcich jazykov patria do SQL štandardu?
+Data Manipulation Language - jazyk na manipuláciu s údajmi
+ 
+Data Definition Language - jazyk na definíciu štruktúry databázy
+ 
+Data Control Language - jazyk na riadenie prístupu k údajom
+Popíšte 2 časti databázového systému.
+
+Odpoveď: Databáza (Báza dát) - komplex dát, medzi ktorými existujú vzťahy. Systém riadenia bázy dát - systém umožňujúci používateľovi pracovať s dátami.
+
+Máme ERD opisujúce databázu šachových hlavolamov ako je ukázané na nasledujúcom obrázku. Koľko stĺpcov bude mať v relačnom modele tabuľka pre asociatívnu entity “vyriesil“? 3
+
+Stĺpec relácie reprezentuje:jeden určitý druh informácie. V teórii relačného modelu dát sa nazýva atribút.
+Májme dopyt:
+
+SELECT name
+FROM track
+WHERE (unitPrice > 0.5 AND unitPrice <= 1.0)
+OR composer = 'U2';
+
+Ktorý z nasledujúcich indexov databázový systém nevie využiť pre zefektívnenie jeho vykonávania?index na báze hešovacej tabuľky nad stĺpcom unitPrice
+
+Interná úroveň ponúka pohľad na dáta:tak, že reprezentujú spôsob fyzického uloženia dát
+Zapíšte údajový typ, ktorý vám umožní zadávať číslo s počtom všetkých číslic 5 a počtom číslic desatinnej časti 3.   
+1 из 1
+numeric(5,3)
+ 
+Májme ERD pre jedlá ako je ukázaný na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na vzťah "obsahuje".každý z alergénov databázy nájdeme aspoň v jednom jedle
+ 
+jedlo môže obsahovať viacero alergénov, pričom každý z nich sa môže nachádzať vo viacerých jedlách
+
+Vyberte, čo musí platiť, aby bola databáza v 1. normálnej forme.hodnoty všetkých stĺpcov v databáze musia byť atomické
+ 
+databáza nemôže obsahovať zložené stĺpce databáza nemôže obsahovať viachodnotové stĺpce
+
+Prístup k dátam v databázovom systéme je možný
+iba prostredníctvom programov databázového systému
+
+ 
+Hodnoty v tabuľkách RDM:musia byť skalárne
+Vyberte správnu alternatívu k podmienke: cena NOT BETWEEN 1000 AND 4000    cena < 1000 OR cena > 4000
+Architektúra DBS je rozdelená na tri úrovne (vyberte, ktoré sú to):
+1 из 1
+externá, sieťová, úroveň služieb
+externá, konceptuálna, interná
+ 
+fyzická, sieťová, aplikačná
+ 
+Máme ERD opisujúce databázu šachových hlavolomok ako je ukázané na nasledujúcom obrázku. Prečo je atribút 'Používateľské meno' entitnej množiny 'Riešiteľ' podčiarknutý?
+1 из 1
+Подпись отсутствует
+lebo používateľské meno je aktualizovateľné – je ho možné meniť
+lebo používateľské meno je povinný atribút – každý riešiteľ ho musí mať definované
+ 
+lebo používateľské meno riešiteľa musí byť unikátne (jedinečné)
+ 
+lebo hodnota používateľského mena je odvodená (derivovaná) z mena a priezviska riešiteľa
+ 
+Vyberte pravdivé tvrdenia o agregácných funkciách.
+1 из 1
+Môžu sa použiť iba v selecte, ktorý má klauzulu GROUP BY, bez nej ich nie je možné použiť
+Hodnota NULL je agregácnými funkciami ignorovaná
+ 
+Umožňujú vrárať poddopyty aj vo WHERE klauzule
+Agregujú viaceré hodnoty (napr. hodnoty v stĺpci) do jednej hodnoty, napr. vypočítajú priemernú hodnotu zo zoznamu čísel
+ 
+ 
+   Zobrazte tabuľku faktury zoradenú vzostupne podľa stĺpca ciastka.
+1 из 1
+select * from faktury order by ciastka;
+ 
+ 
+Dáta v databáze sú usporiadané v:
+1 из 1
+jednorozmerných tabuľkách
+dvojrozmerných tabuľkách
+ 
+trojrozmerných tabuľkách
+ 
+Májme ERD pre fakultu ako je ukázaný na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na vzťah "zamestnáva".
+1 из 1
+Подпись отсутствует
+Všetky atribúty sú atomické.
+Profesor nemôže pracovať na viacerých fakultách súčasne.
+ 
+Na fakulte musí byť vždy aspoň jeden profesor.
+ 
+V relačnom modeli bude tento vzťah vyjadrený cudzím kľúčom na strane profesora.
+ 
+ERD reprezentuje databázu ktorá je v prvej normálnej forme.
+ 
+  V dopyte SELECT * FROM customers WHERE email OPERATOR ‘%@gmail.com’ chýba operátor (nahradený slovom OPERATOR).   
+1 из 1
+like
+ 
+ 
+  Dátový model je:  
+1 из 1
+súhrn pravidiel, pre reprezentáciu fyzickej organizácie dát v databáze.
+súhrn pravidiel, pre reprezentáciu logickej organizácie dát v databáze.
+ 
+ 
+Perzistentné dáta sú dáta, ktoré:
+1 из 1
+ktoré existujú aj po ukončení programu
+ 
+sa pri ukončení programu zmažú
+ 
+Riadok relácie reprezentuje:
+1 из 1
+akúkoľvek informáciu o objekte popisovanom tabuľkou. V teórii relačného modelu dát sa hovorí o prvku relácie, alebo aj o n-tici alebo tiež vete.
+ 
+jeden určitý druh informácie. V teórii relačného modelu dát sa nazýva atribút.
+ 
+Ktoré z nasledujúcich tvrdení o nulitnom prístupe k zabezpečeniu referenčnej integrity sú pravdivé?
+1 из 1
+Ak je aktualizovaný záznam, na ktorý existuje referencia, databáza vyhodí výnimku.
+Ak je zmažaný záznam, na ktorý existuje referencia, referencia sa nastaví na NULL.
+ 
+Ak je zmažaný záznam, na ktorý existuje referencia, automaticky sa zmažie aj referujúci záznam.
+Ak je aktualizovaná referencia na nejaký záznam, automaticky sa aktualizuje aj primárny kľúč, na ktorý sa referencia odkazovala.
+Ak je aktualizovaný primárny kľúč záznamu, na ktorý existuje referencia, referencia sa nastaví na NULL.
+ 
+ 
+ Aký reťazec dostanete aplikáciou funkcie replace(‘matematika’,’ka’,te’)?    
+1 из 1
+matematite
+ 
+ 
+  Koľko tabuliek vznikne prepisom nasledovného ER diagramu do relačného modelu?    
+1 из 1
+Подпись отсутствует
+1
+2
+ 
+3
+4
+ 
+`  Vyberte správnu alternatívu k podmienke: cena NOT BETWEEN 2000 AND 300   
+1 из 1
+cena < 300 or cena > 2000
+ 
+ 
+Vyberte pravdivé tvrdenia o LEFT OUTER JOINe:
+1 из 1
+Žiadny OUTER JOIN neumožňuje použiť USING klauzulu, pri OUTER JOINoch je povolená iba ON klauzula.
+Neodporúča sa používať; vhodnou náhradou je INNER JOIN s USING, kde sa explicitne vymenujú stĺpce s rovnakým názvom, ktoré sa majú použiť pri spájaní.
+Vo výsledku sa objaví každý záznam z ľavej tabuľky aspoň raz.
+ 
+Výsledkom je kombinácia záznamov z jednej tabuľky so záznamami druhej tabuľky, pre ktoré platí podmienka v ON klauzule, a o záznamy z ľavej tabuľky, ktoré nemajú pár splňajúci podmienku, doplnené o NULL hodnoty.
+ 
+ 
+Vyberte pravdivé tvrdenia o zjednotení ako množinovej operácii v SQL.
+1 из 1
+UNION je vykonový rýchlejši ako UNION ALL.
+UNION ALL zjednotí všetky záznamy a pritom odstráni duplikáty.
+ORDER BY sa môže pri použití UNION použiť iba v rámci druhého SELECT-u.
+UNION ALL zjednotí záznamy tak, že neodstráni duplikáty.
+ 
+v rámci jedného dopytu sa môže UNION použiť iba raz.
+ 
+Dátový model pozostáva z (vyberte správne):
+1 из 1
+dokumentácie
+Pomenovaných logických dátových jednotiek
+ 
+Vzťahov medzi nimi
+ 
+súborov s dátami
+ 
+SELECT * FROM zmrzlinovy_stanok s TAJOMSTVO zmrzlina ON s.StanokID = z.ZmrzlinaID;
+O dopyte uvedenom vyššie vieme že existujú v databáze zmrzliny ktoré ešte nepatria k žiadnemu stánku, ku každému stánku patrí ale minimálne jedna zmrzlina. Naším cieľom je použiť JOIN, ktorý nám vráti záznamy v ktorých budú údaje o zmrzline v prvom stĺpci a údaje o stánku, ku ktorému zmrzlina patrí, v druhom. Chceme však aby nám dopyt vrátil aj zmrzliny ktoré nepatria ku žiadnemu stánku.
+ Akým druhom JOIN-u by mali byť tabuľky spojené (na mieste je teraz v dopyte slovo TAJOMSTVO) aby sme dosiahli uvedený cieľ? Vyberte jednu alebo viac správnych odpovedí:
+1 из 1
+NATURAL JOIN
+INNER JOIN
+RIGHT OUTER JOIN
+ 
+LEFT OUTER JOIN
+EQUAL JOIN
+ 
+Každý dotazovací jazyk musí mať tri časti (vyberte):
+1 из 1
+DCL
+ 
+DML
+ 
+DLD
+DAT
+DDL
+ 
+ 
+Vyberte z nasledujúcich funkcií tie, ktoré sú agregácné:
+
+1 из 1
+
+AVG
+ 
+COUNT
+ 
+
+ 
+Vyberte vlastnosti primárneho kľúča.
+
+jednoznačne identifikuje záznamy v tabuľke
+ 
+má unikátnu hodnotu
+ 
+
+ 
+V jazyku SQL je platným zápisom logických podmienok výraz:
+1 из 1
+
+expression OR expression
+ 
+
+expression AND expression
+ 
+
+ 
+Vyberte ktoré tvrdenia opisujú definíciu 3. normálnej formy.
+
+primárny kľúč nesmie byť zložený z viacerých atribútov
+nekľúčové atribúty sú na primárnom kľúči závislé priamo a nie tranzitívne
+ 
+nekľúčové atribúty sú navzájom nezávislé
+ 
+ 
+Napíšte select pre MySQL, ktorý vytvorí tabuľku OSOBY, ktorá bude mať dva stĺpce – ID (typ numeric(6)) a PRIEZVISKO (typ varchar(20)), pričom atribút ID nesmie byť nulový.
+1 из 1
+create table OSOBY(ID numeric(6) not null, PRIEZVISKO varchar(20));
+ 
+ 
+  Uveďte údajový typ, ktorý vám umožní zadávať finančnú hodnotu v Eurách od -99,99 EUR do 99,99 EUR (po zaokrúhlení na dve desatinné miesta), ale napr. 100 EUR už nie. Bez použitia CHECK.  
+1 из 1
+numeric(4,2)
+ 
+ 
+  Napíšte operátor určený pre zlúčenie (zreťazenie, sčítanie) reťazcov    
+
+||
+ 
+ 
+Vyberte správnu alternatívu k podmienke: cena NOT IN (2000,3000)
+
+
+cena <> 2000 AND cena <> 3000
+ 
+ 
+Vyberte tvrdenia, ktoré opisujú význam nasledujúceho dopytu: SELECT priezvisko FROM zamestnanec INTERSECT SELECT priezvisko FROM zákazník;
+
+Výstupom selectu je prienik priezvisk, nachádzajúcich sa v tabuľkach zákazník a zamestnanec
+ 
+ 
+Májme dopyt: SELECT 'Zamestnanec: ' || e.firstname || e.lastname, 'Zákazník: ' || c.firstname || c.lastname FROM customer c JOIN employee e ON c.supportRepId = e.employeeId WHERE e.hiredate < '1.1.2010'; Ktoré z nasledujúcich indexov databázový systém vie využiť pre zefektívnenie jeho vykonávania?
+
+index na báze hešovacej tabuľky nad stĺpcom supportRepId tabuľky customer
+ 
+
+index na báze vyváženého stromu nad stĺpcom hiredate tabuľky employee
+ 
+
+ 
+Čo opisuje interná (fyzická) schéma databázy?
+
+fyzické uloženie údajov, formát ich uloženia, a pod.
+ 
+
+ 
+Ktorý príkaz SQL sa používa na vrátenie iba rôznych hodnôt?
+
+distinct
+ 
+ 
+Vyberte pravdivé tvrdenia o relačnom modeli.
+
+Každý stĺpec obsahuje hodnoty toho istého atribútu.
+ 
+Každá tabuľka má jednoznačný názov.
+ 
+Všetky hodnoty v danom zázname sú jednoznačne a plne závislé na primárnom kľúči záznamu.
+ 
+
+Na poriadí záznamov nezáleží.
+ 
+ 
+Pomocou ktorého z uvedených SQL vyberiete záznamy z tabuľky „car“ kde „name“ sa nachádza abecedne medzi (a vrátane) „Audi“ a „Ferrari“?
+
+SELECT * FROM car WHERE name BETWEEN 'Audi' AND 'Ferrari';
+ 
+ 
+Ktoré kľúčové slová sa používajú v súvislosti s transakciami v PostgreSQL?
+
+
+1 из 1
+ROLLBACK
+ 
+SAVEPOINT
+ 
+COMMIT
+ 
+
+BEGIN
+ 
+
+ 
+Kardinalita vzťahu vyjadruje:
+1 из 1
+prípustný počet entít vo vzťahu.
+ 
+
+ 
+Vyberte pravdivé tvrdenia o príkazoch triggery:
+
+
+sú to triggery, ktoré nemajú uvedenú klauzulu FOR EACH ROW
+ 
+vykonajú sa raz pre príkaz, ktorý udalosť spustil
+ 
+ 
+  Uveďte údajový typ, ktorý vám umožní zadávať textové reťazce pevnej (fixnej) dĺžky rozsahu 20 znakov.  
+1 из 1
+char(20)
+ 
+ 
+Ktorým príkazom vieme zrušiť transakciu, aby sa neuložili v databáze zmeny?
+
+ROLLBACK
+ 
+
+ 
+Vyberte pravdivé tvrdenia o NATURAL JOINe:
+
+
+Výsledkom je kombinácia záznamov z jednej tabuľky so záznamami druhej tabuľky, pre ktoré sú hodnoty v rovnako pomenovaných stĺpcoch rovnaké
+ 
+Neodporúča sa používať, vhodnou náhradou je INNER JOIN s USING, kde sa explicitne vymenujú stĺpce s rovnakým názvom, ktoré sa majú použiť pri spájaní
+Májme databázu s reláciami podľa obrázku. Vyberte z možností dopyt, ktorý realizuje nasledovnú požiadavku: zistite, ktorí výrobcovia nevyrábajú tovar YYY
+1 из 1
+select nazov from vyrobca where id_v not in (select tv.id_v from tovar_vyrobca tv, tovar t where tv.id_t = t.id_t and t.nazov = 'YYY'); 
+Vyberte pravdivé tvrdenia o RIGHT OUTER JOINe:
+Výsledkom je kombinácia záznamov z jednej tabuľky so záznamami druhej tabuľky, pre ktoré platí podmienka v ON klauzule, a vo výsledku sú aj záznamy z pravej tabuľky, ktoré nemajú pár splňajúci podmienku, doplnené o NULL hodnoty. 
+Májme ERD pre farmu ako je ukázaný na nasledujúcom obrázku. Vyberte pravdivé tvrdenia vzhladom na vzťah "pracuje na".
+na jednej farme môže súčasne pracovať viacero farmárov, pričom každý z nich môže naraz pracovať na viacerých farmách
+jeden farmár môže v tom čase pracovať naraz na viacerých farmách.
+Existenčná závislosť vyjadruje, že
+inštancia jedného typu nemôže existovať bez zapojenia do vzťahu s inštanciou druhého entitného typu
+ Napíšte kľúčové slovo, pomocou ktorého je možné vrátiť DB do stavu pred začiatkom transakcie.   
+rollback
+Na čo slúžia Indexy v SQL?    
+Na urýchlenie vyhľadávania v tabuľkách.
+Done 
+Uveďte čím sa začína príkaz na zavolanie používateľom vytvorenej funkcie. Napíšte len jedno slovo.Uveďte čím sa začína príkaz na zavolanie používateľom vytvorenej funkcie. Napíšte len jedno slovo.
+SELECT
+Ktorá agregačná funkcia v SQL slúži na spočítanie počtu riadkov v tabuľke? Odpoveď uveďte bez zátvoriek.
+Відповідь: COUNT
+Medzi údajové modely patrí:
+Označte jednu alebo viac odpovedí:
+implementačný
+konceptuálny
+
+Ktoré tvrdenia platia o primárnom kľúči v relačnej databáze:
+
+Select one or more:Musí byť unikátny pre každý riadok v tabuľke.
+Möže byť cudzím kľúčom v inej tabuľke.
+Môže byť zložený z viacerých stĺpcov.
+Použitím akého kľůčového slova sa začina transakcia v PostgreSQL?BEGIN
+
+Pomocou ktorej klauzuly je možné filtrovať záznamy:
+
+Select one or more:WHERE
+HAVING
+ 
+Vyberte vlastnosti primárneho kľúča.
+
+Označte jednu alebo viac odpovedí:
+*môže byť umelý, vytvorený špecificky pre identifikáciu entít
+jeho hodnota musí byť jedinečná v rámci danej tabuľky
+
+Ktorá agrégačná funkcia v SQL slůži na spočítanie počtu riadkov v tabuľke? Odpoveď uveďte bez zátvoriek.COUNT
+Uveďte čím sa začína príkaz na zavolanie používateľom vytvorenej funkcie. Napßte len
+SELECT
+
+Vyberte správne tvrdenia.
+
+Označte jednu alebo viac odpovedí:
+PostgreSQL umožňuje viacerým funkciám zdieľať rovnaké meno, pokiaľ majú odlišné argumenty
+Funkcia môže na výstup vrátiť tabuľku v prípade, že je definovaná s RETURNS TABLE
+Ktoré tvrdenia platia o cudzom kľúči (foreign key) v relačnej databáze:
+
+Select one or more:Môže byť zároveň primárnym kľúčom v tej istej tabuľke.
+
+Uveďse mnodinovů operáciu, ktorá v PoságreSQL vytvorí zjednotenie bez duplikánov.UNION
+Ktoré z nasledujúcich tvrdení platia pre modifikovateľné pohľady?
+SELECT vo view nesmie obsahovať príkaz DISTINCT.
+Pohľad možno urobiť modifikovateľným pomocou trigrov.
+Všetky stĺpce tabuľky s NOT NULL obmedzením musia byť zahrnuté vo view.
+Ledte mnodirewů ogetácsá, litorá v Postgreőla, vytvorí rjednotee a zebraí ag prípadné duplikáty
+UNION ALL
+
+Vyberte správne tvrdeni Premenná NEW v trigger funkcii má dátový typ RECORD
+Trigger funkcia sa vytvára ako regulárna funkcia, avšak nesmie brať žiadne parame
+RAISE EXCEPTION zastaví vykonávanie tela funkcie
+Majme daný ERD zobrazený na nasledujúcom obrázku.
+ Vzťah „vytvoril“ je binárny vzťah.
+• Vzťah „je priateľom“ je rekurzívny vzťah.
+Majme daný ERD zobrazený na nasledujúcom obrázku.
+Відповідь:
+• v relačnom modeli bude tento vzťah vyjadrený cudzím kľúčom na strane Výstupu
+• každý lezec môže mať viacero výstupov, ale každý výstup musí byť realizovaný len jedným
+lezcom
+ Entita Futbalista sa prevedie na tabuľku s primárnym kľúčom.
+• Atribúty z entít sa stanú stĺpcami v tabuľkách.
+Відповідь:
+• Z databázy je možné zistiť, ktoré tagy používa ktorý používateľ
+• Príspevok s „id_rodic“ rovný null nie je komentárom iného príspevku
+Ktorý príkaz SQL sa používa na vrátenie iba rôznych hodnôt?
+DISTINCT 
+V dopyte SELECT * FROM customers WHERE email OPERATOR ‘%@gmail.com’
+chýba operátor (nahradený slovom OPERATOR). LIKE
+Zapíšte údajový typ, ktorý vám umožní zadávať číslo s počtom všetkých číslic 5 a
+počtom číslic desatinnej časti 3. numeric(5,3)
+Ktoré kľúčové slová sa používajú v súvislosti s transakciami v PostgreSQL?: 
+ROLLBACK
+SAVEPOINT
+e. BEGIN
+COMMIT
+Ktoré z nasledujúcich jazykov patria do SQL štandardu?
+DDL - Data Definition Language
+DQL - Data Query Language
+DML - Data Manipulation Language
+DCL - Data Control Language
+TCL - Transaction Control Language
